@@ -1,6 +1,6 @@
 import React, {useState ,useEffect} from 'react'
 import styled from 'styled-components'
-import axios from 'axios';
+
 
 import Message from './Message'
 
@@ -130,10 +130,7 @@ const HeaderContainer = styled.div`
 function Chat(props) {
     const test = props.test;
 
-    function handleSubmit(event){
-        axios.post("http://localhost:6000/messages", test)
-        .then((res) => console.log(res.data));
-    }
+
     return (
         <StyledContainer>
             {/* sidebar with chats */}
@@ -193,7 +190,7 @@ function Chat(props) {
                     
                     <StyledTextContainer id='messageForm' action='' onSubmit={props.submitHandler}>
             
-                            <StyledInput  type='text' name='message' onSubmit={handleSubmit} >
+                            <StyledInput  type='text' name='message' >
                             </StyledInput>
                             <StyledSend>
                                 Send

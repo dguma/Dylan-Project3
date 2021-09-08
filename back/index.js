@@ -14,10 +14,14 @@ app.use(express.urlencoded({extended:true}));
 
 //controllers
 const userController = require('./controllers/userController');
-app.use('/users', userController);
+app.use('/api/users', userController);
 
 const messageController = require('./controllers/messageController');
-app.use('/messages', messageController);
+app.use('/api/messages', messageController);
+
+app.get('/', (req, res) => {
+    res.redirect('/api/messages')
+})
 
 //io
 io.on("connection", socket => {
@@ -31,8 +35,8 @@ io.on("connection", socket => {
     })
 });
 
-const port = process.env.PORT || 6000;
+app.set('port', process.env.PORT || 4000)
 
-app.listen(port, () => {
-    console.log(`Servers is connected and listening on port: ${port}`)
+app.listen(app.get('port'), () => {
+    console.log(`Server is connected and listening on port: ${app.get('port')}`)
 })

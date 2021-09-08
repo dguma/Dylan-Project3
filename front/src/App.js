@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import axios from 'axios';
 import Chat from './Chat'
 import './App.css';
 import io from 'socket.io-client';
@@ -42,7 +42,11 @@ function submitHandler(event) {
   // setTest(...test,event.target.firstChild.value)
   // setTest(test.concat(event.target.firstChild.value));
   setTest(test => [...test, (<div>{event.target.firstChild.value}</div>)]);
-
+  axios.post("http://localhost:4000/api/messages", {
+    name: 'dylan',
+    message: 'this was sent from react!'
+})
+.then((res) => console.log(res.data));
 }
 
 
