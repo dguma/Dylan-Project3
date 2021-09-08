@@ -1,0 +1,22 @@
+.messages{
+    height: 100%;
+    display: flex;
+}
+
+.main-chat{
+    flex: 4;
+}
+.main-chat-input{
+    width: 90%;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid grey;
+}
+.chat-box{
+    flex: 6;
+}
+.main-container, .chat-box-container{
+    padding: 10px;
+    height: 100%;
+
+}
