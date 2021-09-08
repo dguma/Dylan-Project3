@@ -27,9 +27,11 @@ router.put('/:id', (req, res, next) => {
     const id = req.params.id;
     Message.findOneAndUpdate(
         { _id: id },
-        { },
+        req.body,
         { new: true }
-    );
+    )
+    .then(msg => res.json(msg))
+    .catch(next)
 })
 
 router.delete('/:id', (req, res, next) => {
