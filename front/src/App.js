@@ -33,11 +33,12 @@ console.log(test)
 
 function submitHandler(event) {
   event.preventDefault();
-  console.log(event.target.firstChild.value)
+  // console.log(event.target.firstChild.value)
   
   socket.emit('chatMessage', event.target.firstChild.value)
   // setTest(...test,event.target.firstChild.value)
-  setTest(test.concat(event.target.firstChild.value));
+  // setTest(test.concat(event.target.firstChild.value));
+  setTest(test => [...test, (<div>{event.target.firstChild.value}</div>)]);
 }
 
 
@@ -47,7 +48,7 @@ function submitHandler(event) {
       <ChatPage test={ test } />
       <header className="App-header">
         <h1>Welcome</h1>
-        <div>${test}</div>
+        <div>{test}</div>
       </header>
       <form id='messageForm' action='' onSubmit={submitHandler}>
         <input type='text' name='message' />
