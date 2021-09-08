@@ -19,7 +19,7 @@ const StyledMessage = styled.button`
 
     word-wrap: break-word;
     white-space: normal
-`
+`;
 
 function Message(props) {
     return (
@@ -29,4 +29,4 @@ function Message(props) {
     )
 }
 
-export default Message
+export default Message;

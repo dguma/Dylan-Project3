@@ -86,6 +86,10 @@ const StyledMessagesContainer = styled.div`
     height: 640px;
     width: 95%;
     display: block;
+
+    button:nth-child(odd) {
+        background-color: antiquewhite;
+    }
 `
 
 const StyledSend = styled.button`

@@ -14,17 +14,19 @@ function App() {
 
   const [test, setTest] = useState([]);
 
-  
+  const [iotest, setIoTest] = useState([])
 
   useEffect(() => {
     socket.on('message', (data) => {
-      console.log(data);
+      // console.log(data + ' line 21');
       // setTest(data);
+      setIoTest(iotest => [...iotest, (<div>{data}</div>)])
+      // setTest(test => [...test, (<div>{event.target.firstChild.value}</div>)]);
     })
-  },[test])
+  },[setIoTest])
 
 
-console.log(test)
+// console.log(test)
 
 
 // function appendMessages(message) {
@@ -35,7 +37,6 @@ console.log(test)
 function submitHandler(event) {
   event.preventDefault();
   // console.log(event.target.firstChild.value)
-  
   socket.emit('chatMessage', event.target.firstChild.value)
 
   // setTest(...test,event.target.firstChild.value)
@@ -49,18 +50,17 @@ function submitHandler(event) {
   return (
 
     <Fragment>
-      <Chat test={test } submitHandler={submitHandler}/>
-      <div className="App">
-        {/* <ChatPage test={ test } /> */}
+      <Chat test={iotest} submitHandler={submitHandler}/>
+      {/* <div className="App">
         <header className="App-header">
           <h1>Welcome</h1>
-          <div>{test}</div>
+          <div>{iotest}</div>
         </header>
         <form id='messageForm' action='' onSubmit={submitHandler}>
           <input type='text' name='message' />
           <button>Send</button>
         </form>
-      </div>   
+      </div>    */}
     </Fragment>
   );
 }

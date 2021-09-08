@@ -22,7 +22,7 @@ app.use('/messages', messageController);
 //io
 io.on("connection", socket => {
     console.log('user connected');
-    socket.emit('message', 'hello from backend');
+    // socket.emit('message', 'hello from backend');
     socket.on('disconnect', () => {
         console.log('user disconnected')
     })
