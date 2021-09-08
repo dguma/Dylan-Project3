@@ -1,4 +1,5 @@
 import logo from './logo.svg';
+import Chat from './Chat'
 import './App.css';
 import io from 'socket.io-client';
 import React, {useState ,useEffect} from 'react'
@@ -29,19 +30,16 @@ function submitHandler(event) {
   console.log(event.target.firstChild.value)
   
   socket.emit('chatMessage', event.target.firstChild.value)
-  setTest(...test,event.target.firstChild.value)
+  setTest(test.concat(event.target.firstChild.value))
 }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Welcome</h1>
-        <div>{test}</div>
-      </header>
-      <form id='messageForm' action='' onSubmit={submitHandler}>
-        <input type='text' name='message' />
-        <button>Send</button>
-      </form>
+    <div>
+
+      <Chat test={test } submitHandler={submitHandler}/>
+        
+
+
     </div>
   );
 }
