@@ -34,6 +34,16 @@ function App() {
 //   messages.innerHTML += html
 // }
 
+const [mongoMessages, setMongoMessages] = useState([]);
+useEffect(() => {
+  axios.get('http://localhost:4000/api/messages').then(response => {
+    // gets the initial data
+    setMongoMessages(mongoMessages => [...mongoMessages, response.data])
+  })
+},[setMongoMessages]);
+console.log(mongoMessages)
+
+
 function submitHandler(event) {
   event.preventDefault();
   // console.log(event.target.firstChild.value)
@@ -43,8 +53,8 @@ function submitHandler(event) {
   // setTest(test.concat(event.target.firstChild.value));
   setTest(test => [...test, (<div>{event.target.firstChild.value}</div>)]);
   axios.post("http://localhost:4000/api/messages", {
-    name: 'dylan',
-    message: 'this was sent from react!'
+    name: 'User',
+    message: event.target.firstChild.value
 })
 .then((res) => console.log(res.data));
 }
@@ -54,7 +64,7 @@ function submitHandler(event) {
   return (
 
     <Fragment>
-      <Chat test={iotest} submitHandler={submitHandler}/>
+      <Chat test={iotest} submitHandler={submitHandler} mongoMessages={mongoMessages}/>
       {/* <div className="App">
         <header className="App-header">
           <h1>Welcome</h1>

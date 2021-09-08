@@ -180,9 +180,9 @@ function Chat(props) {
             <StyledChat>
                 <StyledMessagesContainer>
 
-                    {test.map((msg)=><Message test={msg}/>)}
-
-                    
+                    {/* {test.map((msg)=><Message test={msg} />)} */}
+                    {/* {props.mongoMessages.map(msg => <Message test={msg.map(item => item.message)} />)} */}
+                    {props.mongoMessages.map(msg => msg.map(item => <Message test={item.message} />))}
                 </StyledMessagesContainer>
                
 
