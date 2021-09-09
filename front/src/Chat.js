@@ -127,9 +127,10 @@ const HeaderContainer = styled.div`
 
 
 
-function Chat(props) {
-    const test = props.test;
+function Chat({message, messages, setMessage, sendMessage, submitHandler, mongoMessages}) {
+    
 
+console.log(messages)
 
     return (
         <StyledContainer>
@@ -179,20 +180,29 @@ function Chat(props) {
             {/* Main chat selected, with messages */}
             <StyledChat>
                 <StyledMessagesContainer>
-
-                    {/* {test.map((msg)=><Message test={msg} />)} */}
+                    {/* {test.map(msg => <Message test={msg} />)} */}
+                    {/* {(test !== undefined) ? test.map(msg => <Message test={msg.message} id={msg._id} />) : null} */}
+                    {mongoMessages.map((msg, i) => <Message key={i} message={msg.message} id={msg._id} />)}
                     {/* {props.mongoMessages.map(msg => <Message test={msg.map(item => item.message)} />)} */}
-                    {props.mongoMessages.map(msg => msg.map(item => <Message test={item.message} />))}
+                    {/* {props.mongoMessages.map(msg => msg.map(item => <Message mongoData={item.message} test={test} id={item._id} />))} */}
                 </StyledMessagesContainer>
                
 
                     
                     
-                    <StyledTextContainer id='messageForm' action='' onSubmit={props.submitHandler}>
+                    <StyledTextContainer id='messageForm' action='' onSubmit={event => submitHandler(event)}>
             
-                            <StyledInput  type='text' name='message' >
-                            </StyledInput>
-                            <StyledSend>
+                            <StyledInput  
+                             type='text' 
+                             name='message'
+                             placeholder="Type a message..."
+                             
+                             value={message}
+                             onChange={({ target: { value } }) => setMessage(value)}
+                            />
+                            <StyledSend
+                                // onClick={ event => sendMessage(event) }
+                            >
                                 Send
                             </StyledSend>
                         

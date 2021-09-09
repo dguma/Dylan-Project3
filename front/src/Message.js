@@ -25,19 +25,17 @@ const StyledMessage = styled.button`
 function Message(props) {
 
     function handleClick(event) {
-        event.preventDefault();
-        axios.delete("http://localhost:4000/api/messages", {
-        name: 'User',
-        message: event.target.value
-        })
+        // event.preventDefault();
+        window.location.reload();
+        axios.delete(`http://localhost:4001/api/messages/${props.id}`, {})
         .then((res) => console.log(res.data));
     }
 
-    console.log(props.test)
+    // console.log(props.mongoData)
 
     return (
-        <StyledMessage onClick={handleClick} id={props}>
-            {props.test}
+        <StyledMessage onClick={handleClick} id={props.id}>
+            {props.message}
         </StyledMessage>
     )
 }

@@ -4,67 +4,76 @@ import './App.css';
 import io from 'socket.io-client';
 import React, {useState ,useEffect, Fragment} from 'react'
 import ChatPage from './components/ChatPage';
+import { useLocation } from "react-router";
 
-let socket = io('http://localhost:5000');
+
 
 // const messages = document.getElementById('messages')
-
+let socket = io('http://localhost:5000');
 
 function App() {
 
-  const [test, setTest] = useState([]);
+  // let location = useLocation();
 
-  const [iotest, setIoTest] = useState([])
+ 
 
-  useEffect(() => {
-    socket.on('message', (data) => {
-      // console.log(data + ' line 21');
-      // setTest(data);
-      setIoTest(iotest => [...iotest, (<div>{data}</div>)])
-      // setTest(test => [...test, (<div>{event.target.firstChild.value}</div>)]);
-    })
-  },[setIoTest])
+  const [message, setMessage] = useState('');
+  const [messages, setMessages] = useState([])
+  
 
+useEffect(() => {
+  socket.on('message', (message) => {
+       setMessages([...messages, message])
+   })
+},[messages])
 
-// console.log(test)
-
-
-// function appendMessages(message) {
-//   const html = `<div>${message}</div>`
-//   messages.innerHTML += html
-// }
+// console.log(messages)
 
 const [mongoMessages, setMongoMessages] = useState([]);
+
 useEffect(() => {
-  axios.get('http://localhost:4000/api/messages').then(response => {
+  axios.get('http://localhost:4001/api/messages').then(response => {
     // gets the initial data
-    setMongoMessages(mongoMessages => [...mongoMessages, response.data])
+    setMongoMessages(response.data)
   })
-},[setMongoMessages]);
-console.log(mongoMessages)
+},[messages]);
 
 
 function submitHandler(event) {
   event.preventDefault();
-  // console.log(event.target.firstChild.value)
-  socket.emit('chatMessage', event.target.firstChild.value)
 
-  // setTest(...test,event.target.firstChild.value)
-  // setTest(test.concat(event.target.firstChild.value));
-  setTest(test => [...test, (<div>{event.target.firstChild.value}</div>)]);
-  axios.post("http://localhost:4000/api/messages", {
+  socket.emit('chatMessage', event.target.firstChild.value);
+
+  axios.post("http://localhost:4001/api/messages", {
     name: 'User',
     message: event.target.firstChild.value
-})
-.then((res) => console.log(res.data));
-}
+  })
+  .then(res => console.log(res.data))
+  .then(() => event.target.firstChild.value = '')
+  .catch(error => console.log(error))
 
+  }
+
+  const sendMessage = (event) => {
+    event.preventDefault(); 
+    
+    if(message) {
+      socket.emit('chatMessage', message);
+    }
+  }
 
 
   return (
 
     <Fragment>
-      <Chat test={iotest} submitHandler={submitHandler} mongoMessages={mongoMessages}/>
+      <Chat 
+        message={message}
+        messages={messages} 
+        submitHandler={submitHandler} 
+        mongoMessages={mongoMessages} 
+        sendMessage={sendMessage}
+        setMessage={setMessage}
+      />
       {/* <div className="App">
         <header className="App-header">
           <h1>Welcome</h1>
